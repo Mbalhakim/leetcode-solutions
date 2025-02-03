@@ -1,19 +1,49 @@
 "use client";
-import { useState } from "react";
-import Link from "next/link";
+import { useState, useEffect } from "react";
 import { problems } from "@/data/problems";
 import { Problem } from "@/types/problem";
+import { useRouter } from "next/navigation"; // Needed for manual navigation
 
 export default function Home() {
   const [filter, setFilter] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [showBookmarked, setShowBookmarked] = useState<boolean>(false);
+  const [bookmarked, setBookmarked] = useState<string[]>([]); // ✅ Start with empty array
 
+  const router = useRouter();
+
+  // ✅ Load bookmarks from localStorage AFTER the component mounts (Fix Hydration Issue)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedBookmarks = JSON.parse(localStorage.getItem("bookmarked") || "[]");
+      setBookmarked(storedBookmarks);
+    }
+  }, []);
+
+  const toggleBookmark = (id: string, event: React.MouseEvent) => {
+    event.stopPropagation(); // Prevent navigation
+    event.preventDefault(); // Prevent default action
+
+    const updated = bookmarked.includes(id)
+      ? bookmarked.filter((p) => p !== id)
+      : [...bookmarked, id];
+
+    setBookmarked(updated);
+    localStorage.setItem("bookmarked", JSON.stringify(updated));
+  };
+
+  // Filter problems based on search query and difficulty
   const filteredProblems = problems.filter(
     (problem: Problem) =>
       (filter === "All" || problem.difficulty === filter) &&
       (problem.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         problem.description.toLowerCase().includes(searchQuery.toLowerCase()))
   );
+
+  // Show only bookmarked problems when button is toggled
+  const displayedProblems = showBookmarked
+    ? problems.filter((p) => bookmarked.includes(p.id))
+    : filteredProblems;
 
   return (
     <main className="min-h-screen p-8 max-w-6xl mx-auto bg-white dark:bg-gray-900">
@@ -35,8 +65,17 @@ export default function Home() {
             className="p-3 border rounded bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 border-gray-200 dark:border-gray-700 w-full sm:w-64"
           />
 
+          {/* Show Bookmarked Button */}
+          <button
+            onClick={() => setShowBookmarked(!showBookmarked)}
+            className="p-2 border rounded-md transition 
+            bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600"
+          >
+            {showBookmarked ? "All Problems🎯" : "Show Bookmarked⭐"}
+          </button>
+
           {/* Difficulty Filter */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <label className="text-gray-800 dark:text-gray-100 font-medium">
               Filter by Difficulty:
             </label>
@@ -55,11 +94,11 @@ export default function Home() {
       </header>
 
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredProblems.map((problem: Problem) => (
-          <Link
+        {displayedProblems.map((problem: Problem) => (
+          <div
             key={problem.id}
-            href={`/problems/${problem.id}`}
-            className="p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+            onClick={() => router.push(`/problems/${problem.id}`)}
+            className="p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 cursor-pointer"
           >
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
@@ -83,7 +122,15 @@ export default function Home() {
             <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
               Solved: {problem.dateSolved}
             </div>
-          </Link>
+
+            {/* Bookmark Button - Clickable Without Navigating */}
+            <button
+              onClick={(e) => toggleBookmark(problem.id, e)}
+              className="mt-3 p-2 rounded-md text-yellow-500 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+            >
+              {bookmarked.includes(problem.id) ? "⭐ Bookmarked" : "☆ Bookmark"}
+            </button>
+          </div>
         ))}
       </section>
     </main>
