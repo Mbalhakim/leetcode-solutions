@@ -124,6 +124,46 @@ examples: [
       'It is guaranteed that the answer is unique.'
     ],
     category: "Algorithms",
-    dateSolved: "2025-02-03"
+    dateSolved: "20-07-2023"
+  },
+  {
+    id: "contains-duplicate",
+    title: "217. Contains Duplicate",
+    difficulty: "Easy",
+    description:
+      "Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.",
+    explanation: `To determine if an array contains duplicates, we can use a HashSet to store numbers as we iterate through the array. 
+    If we encounter a number that is already in the HashSet, we return true; otherwise, we continue adding numbers to the set. 
+    If the loop completes without finding duplicates, we return false. This approach ensures an O(n) time complexity.`,
+    code: `const containsDuplicate = (nums: number[]): boolean => {
+  const seen = new Set<number>();
+  for (let num of nums) {
+    if (seen.has(num)) return true;
+    seen.add(num);
   }
+  return false;
+};`,
+    examples: [
+      {
+        input: "nums = [1,2,3,1]",
+        output: "true",
+        explanation: "The element 1 occurs at the indices 0 and 3.",
+      },
+      {
+        input: "nums = [1,2,3,4]",
+        output: "false",
+        explanation: "All elements are distinct.",
+      },
+      {
+        input: "nums = [1,1,1,3,3,4,3,2,4,2]",
+        output: "true",
+      },
+    ],
+    constraints: [
+      "1 <= nums.length <= 10^5",
+      "-10^9 <= nums[i] <= 10^9",
+    ],
+    category: "Algorithms",
+    dateSolved: "13-02-2024",
+  },
 ];

@@ -11,7 +11,7 @@ import Constraints from "@/components/Constraints";
 import RomanConverter from "@/components/RomanConverter";
 import TwoSum from "./TwoSum";
 import TopKFrequentElements from "./TopKFrequentElements";
-
+import ContainsDuplicate from "./ContainsDuplicate";
 export default function ProblemPage() {
   const params = useParams();
   if (!params || typeof params.id !== "string") {
@@ -69,6 +69,15 @@ export default function ProblemPage() {
       {problem.constraints && problem.constraints.length > 0 && (
         <div className="mt-6">
           <Constraints constraints={problem.constraints} />
+        </div>
+      )}
+
+      {problem.id === "contains-duplicate" && (
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
+            Try it Yourself
+          </h2>
+          <ContainsDuplicate />
         </div>
       )}
 
