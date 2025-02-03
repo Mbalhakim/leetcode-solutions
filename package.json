@@ -6,8 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "deploy": "npm run build && gh-pages -d out",
-    "lint": "next lint"
+    "export": "next export",
+    "static": "next build && echo. > ./out/.nojekyll",
+    "deploy": "gh-pages -d out --nojekyll",
+    "lint": "next lint",
+    "serve": "npx serve@latest out"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

@@ -1,21 +1,24 @@
-'use client';
+"use client";
 
-import { useParams } from 'next/navigation';
-import { notFound } from 'next/navigation';
-import { problems } from '@/data/problems';
-import { Problem } from '@/types/problem';
-import Explanation from '@/components/Explanation';
-import Code from '@/components/Code';
-import RomanConverter from '@/components/RomanConverter'; // Import RomanConverter
-import TwoSum from './TwoSum';
+import { useParams } from "next/navigation";
+import { notFound } from "next/navigation";
+import { problems } from "@/data/problems";
+import { Problem } from "@/types/problem";
+import Explanation from "@/components/Explanation";
+import Code from "@/components/Code";
+import Examples from "@/components/Examples";
+import Constraints from "@/components/Constraints";
+import RomanConverter from "@/components/RomanConverter";
+import TwoSum from "./TwoSum";
+import TopKFrequentElements from "./TopKFrequentElements";
 
 export default function ProblemPage() {
   const params = useParams();
-  if (!params || typeof params.id !== 'string') {
+  if (!params || typeof params.id !== "string") {
     return notFound();
   }
 
-  const problem: Problem | undefined = problems.find(p => p.id === params.id);
+  const problem: Problem | undefined = problems.find((p) => p.id === params.id);
   if (!problem) return notFound();
 
   return (
@@ -26,7 +29,8 @@ export default function ProblemPage() {
       <p className="mt-2 text-gray-700 dark:text-gray-300">
         {problem.description}
       </p>
-      
+
+      {/* Problem-Specific Interactive Components */}
       {problem.id === "two-sum" && (
         <div className="mt-6">
           <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
@@ -35,8 +39,7 @@ export default function ProblemPage() {
           <TwoSum />
         </div>
       )}
-      
-      {/* Show RomanConverter ONLY if the problem is "roman-to-integer" */}
+
       {problem.id === "roman-to-integer" && (
         <div className="mt-6">
           <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
@@ -46,6 +49,30 @@ export default function ProblemPage() {
         </div>
       )}
 
+      {problem.id === "top-k-frequent-elements" && (
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
+            Try it Yourself
+          </h2>
+          <TopKFrequentElements />
+        </div>
+      )}
+
+      {/* Examples Section */}
+      {problem.examples && problem.examples.length > 0 && (
+        <div className="mt-6">
+          <Examples examples={problem.examples} />
+        </div>
+      )}
+
+      {/* Constraints Section */}
+      {problem.constraints && problem.constraints.length > 0 && (
+        <div className="mt-6">
+          <Constraints constraints={problem.constraints} />
+        </div>
+      )}
+
+      {/* Explanation & Code Section */}
       <div className="mt-6 space-y-4">
         <Explanation explanation={problem.explanation} />
         <Code code={problem.code} />

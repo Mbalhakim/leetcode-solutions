@@ -5,6 +5,8 @@ export interface Problem {
     description: string;
     explanation: string;
     code: string;
+    constraints:Array;
+    examples:Array;
     category?: string;
     dateSolved: string;
   }

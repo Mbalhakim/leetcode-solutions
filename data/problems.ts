@@ -5,7 +5,7 @@ export const problems: Problem[] = [
     id: "roman-to-integer",
     title: "13. Roman to Integer",
     difficulty: "Easy",
-    description: "Convert Roman numerals to integers",
+    description: "Roman numerals are represented by seven different symbols: I, V, X, L, C, D, and M. Each of these symbols has a corresponding value.",
     explanation: `The function romanToInt converts a Roman numeral string to its integer equivalent by iterating through the string and checking the current and next Roman numeral values. 
     The key logic is to check if the current numeral is less than the next one. If so, it subtracts the current numeral from 
     the next one (since it's part of a subtraction pair like IV or IX); otherwise, it simply adds the value.`,
@@ -30,8 +30,26 @@ export const problems: Problem[] = [
   }
   return total;
 };`,
+examples: [
+    {
+      input: 's = III ',
+      output: '3',
+      explanation:" III = 3."
+    },
+    {
+      input: 's = LVIII',
+      output: '58',
+      explanation: ' L = 50, V= 5, III = 3.'
+    }
+  ],
+  constraints: [
+    '1 <= s.length <= 15',
+    's contains only the characters (I, V, X, L, C, D, M)',
+    'It is guaranteed that s is a valid roman numeral in the range [1, 3999].',
+
+  ],
     category: "Algorithms",
-    dateSolved: "2024-03-15"
+    dateSolved: "05-06-2023"
   },
   {
     id: "two-sum",
@@ -53,7 +71,59 @@ export const problems: Problem[] = [
   }
   return [];
 };`,
+examples: [
+    {
+      input: 'nums = [2,7,11,15], target = ',
+      output: '[0,1]',
+      explanation:" Because nums[0] + nums[1] == 9, we return [0, 1]. "
+    },
+    {
+      input: 'nums = [3,2,4], target = 6',
+      output: '[1,2]',
+    }
+  ],
+  constraints: [
+    '2 <= nums.length <= 10^4',
+    '-10^9 <= nums[i] <= 10^9',
+    '-10^9 <= target <= 10^9',
+
+  ],
     category: "Algorithms",
-    dateSolved: "2025-02-03",
+    dateSolved: "01-06-2023",
   },
+  {
+    id: "top-k-frequent-elements",
+    title: "347. Top K Frequent Elements",
+    difficulty: "Medium",
+    description:
+      "Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.",
+    explanation: `To find the k most frequent elements, we can use a hash map to count the frequency of each element and then use a heap (priority queue) to get the top k elements. This approach ensures the time complexity is better than O(n log n).`,
+    code: `const topKFrequent = (nums: number[], k: number): number[] => {
+      const countMap = new Map<number, number>();
+      nums.forEach(num => countMap.set(num, (countMap.get(num) || 0) + 1));
+      
+      const sortedByFrequency = Array.from(countMap).sort((a, b) => b[1] - a[1]);
+      
+      return sortedByFrequency.slice(0, k).map(item => item[0]);
+    };`,
+    examples: [
+      {
+        input: 'nums = [1,1,1,2,2,3], k = 2',
+        output: '[1, 2]',
+        
+      },
+      {
+        input: 'nums = [1], k = 1',
+        output: '[1]',
+      }
+    ],
+    constraints: [
+      '1 <= nums.length <= 10^5',
+      '-10^4 <= nums[i] <= 10^4',
+      'k is in the range [1, the number of unique elements in the array]',
+      'It is guaranteed that the answer is unique.'
+    ],
+    category: "Algorithms",
+    dateSolved: "2025-02-03"
+  }
 ];
