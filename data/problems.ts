@@ -271,4 +271,59 @@ examples: [
     category: "Algorithms",
     dateSolved: "23-05-204",
   },
+  {
+    id: "add-two-numbers",
+    title: "2. Add Two Numbers",
+    difficulty: "Medium",
+    description:
+      "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.",
+    explanation: `We traverse both linked lists, adding corresponding nodes along with a carry value. If one list is shorter, we continue with the longer one while keeping track of the carry. Finally, if there is a carry left, we add an extra node.`,
+    code: `class ListNode {
+  val: number;
+  next: ListNode | null;
+  constructor(val?: number, next?: ListNode | null) {
+    this.val = val ?? 0;
+    this.next = next ?? null;
+  }
+}
+
+const addTwoNumbers = (l1: ListNode | null, l2: ListNode | null): ListNode | null => {
+  let dummy = new ListNode();
+  let current = dummy;
+  let carry = 0;
+
+  while (l1 || l2 || carry) {
+    let sum = (l1?.val ?? 0) + (l2?.val ?? 0) + carry;
+    carry = Math.floor(sum / 10);
+    current.next = new ListNode(sum % 10);
+    current = current.next;
+    l1 = l1?.next ?? null;
+    l2 = l2?.next ?? null;
+  }
+
+  return dummy.next;
+};`,
+    examples: [
+      {
+        input: "l1 = [2,4,3], l2 = [5,6,4]",
+        output: "[7,0,8]",
+        explanation: "342 + 465 = 807.",
+      },
+      {
+        input: "l1 = [0], l2 = [0]",
+        output: "[0]",
+      },
+      {
+        input: "l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]",
+        output: "[8,9,9,9,0,0,0,1]",
+      },
+    ],
+    constraints: [
+      "The number of nodes in each linked list is in the range [1, 100].",
+      "0 <= Node.val <= 9",
+      "It is guaranteed that the list represents a number that does not have leading zeros.",
+    ],
+    category: "Linked List",
+    dateSolved: "02-02-2025",
+  },
 ];

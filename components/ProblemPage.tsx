@@ -15,7 +15,7 @@ import ContainsDuplicate from "./ContainsDuplicate";
 import PalindromeNumber from "./PalindromeNumber";
 import ValidAnagram from "./ValidAnagram";
 import FindFirstPalindromicString from "./FindFirstPalindromicString";
-
+import AddTwoNumbers from "@/components/AddTwoNumbers";
 export default function ProblemPage() {
   const params = useParams();
   if (!params || typeof params.id !== "string") {
@@ -75,6 +75,15 @@ export default function ProblemPage() {
             Try it Yourself
           </h2>
           <FindFirstPalindromicString />
+        </div>
+      )}
+
+{problem.id === "add-two-numbers" && (
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
+            Try it Yourself
+          </h2>
+          <AddTwoNumbers />
         </div>
       )}
 
