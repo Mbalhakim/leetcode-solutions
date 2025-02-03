@@ -14,6 +14,8 @@ import TopKFrequentElements from "./TopKFrequentElements";
 import ContainsDuplicate from "./ContainsDuplicate";
 import PalindromeNumber from "./PalindromeNumber";
 import ValidAnagram from "./ValidAnagram";
+import FindFirstPalindromicString from "./FindFirstPalindromicString";
+
 export default function ProblemPage() {
   const params = useParams();
   if (!params || typeof params.id !== "string") {
@@ -65,6 +67,14 @@ export default function ProblemPage() {
             Try it Yourself
           </h2>
           <TopKFrequentElements />
+        </div>
+      )}
+      {problem.id === "find-first-palindromic-string" && (
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
+            Try it Yourself
+          </h2>
+          <FindFirstPalindromicString />
         </div>
       )}
 

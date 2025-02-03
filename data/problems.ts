@@ -231,4 +231,44 @@ examples: [
     category: "Algorithms",
     dateSolved: "19-07-2024",
   },
+  {
+    id: "find-first-palindromic-string",
+    title: "2108. Find First Palindromic String in the Array",
+    difficulty: "Easy",
+    description:
+      "Given an array of strings words, return the first palindromic string in the array. If there is no such string, return an empty string \"\".",
+    explanation: `A string is palindromic if it reads the same forward and backward. 
+    To find the first palindromic string in an array, we iterate through the array and check each string.
+    If a string is a palindrome, we return it immediately. If none are found, we return an empty string.`,
+    code: `const firstPalindrome = (words: string[]): string => {
+  for (const word of words) {
+    if (word === word.split("").reverse().join("")) return word;
+  }
+  return "";
+};`,
+    examples: [
+      {
+        input: 'words = ["abc","car","ada","racecar","cool"]',
+        output: '"ada"',
+        explanation: 'The first palindromic string is "ada".',
+      },
+      {
+        input: 'words = ["notapalindrome","racecar"]',
+        output: '"racecar"',
+        explanation: 'The first and only palindromic string is "racecar".',
+      },
+      {
+        input: 'words = ["def","ghi"]',
+        output: '""',
+        explanation: 'There are no palindromic strings, so the empty string is returned.',
+      },
+    ],
+    constraints: [
+      "1 <= words.length <= 100",
+      "1 <= words[i].length <= 100",
+      "words[i] consists only of lowercase English letters.",
+    ],
+    category: "Algorithms",
+    dateSolved: "23-05-204",
+  },
 ];
