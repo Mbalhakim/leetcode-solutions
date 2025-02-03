@@ -1,8 +1,17 @@
+"use client"
+import { useState } from 'react';
 import Link from 'next/link';
 import { problems } from '@/data/problems';
 import { Problem } from '@/types/problem';
 
 export default function Home() {
+  const [filter, setFilter] = useState<string>('All');
+
+  // Filter the problems based on the selected difficulty.
+  const filteredProblems = filter === 'All'
+    ? problems
+    : problems.filter((problem: Problem) => problem.difficulty === filter);
+
   return (
     <main className="min-h-screen p-8 max-w-6xl mx-auto bg-white dark:bg-gray-900">
       <header className="mb-12">
@@ -12,10 +21,27 @@ export default function Home() {
         <p className="text-lg text-gray-700 dark:text-gray-300">
           A collection of TypeScript solutions to various LeetCode problems
         </p>
+
+        {/* Filter Dropdown */}
+        <div className="mt-6">
+          <label className="mr-2 text-gray-800 dark:text-gray-100 font-medium">
+            Filter by Difficulty:
+          </label>
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="p-2 border rounded bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 border-gray-200 dark:border-gray-700"
+          >
+            <option value="All">All</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+        </div>
       </header>
 
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {problems.map((problem: Problem) => (
+        {filteredProblems.map((problem: Problem) => (
           <Link 
             key={problem.id}
             href={`/problems/${problem.id}`}
