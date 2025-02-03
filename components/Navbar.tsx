@@ -1,3 +1,4 @@
+// components/Navbar.tsx
 'use client';
 
 import Link from 'next/link';
@@ -12,6 +13,12 @@ export default function Navbar() {
         </Link>
         
         <div className="flex items-center gap-4">
+          <Link
+            href="/add-problem"
+            className="px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white rounded-md hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors text-sm"
+          >
+            Add Problem
+          </Link>
           <ThemeToggle />
         </div>
       </div>

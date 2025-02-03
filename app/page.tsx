@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { problems } from "@/data/problems";
 import { Problem } from "@/types/problem";
 import { useRouter } from "next/navigation"; // Needed for manual navigation
-
+import Link from "next/link";
 export default function Home() {
   const [filter, setFilter] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -15,7 +15,9 @@ export default function Home() {
   // ✅ Load bookmarks from localStorage AFTER the component mounts (Fix Hydration Issue)
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedBookmarks = JSON.parse(localStorage.getItem("bookmarked") || "[]");
+      const storedBookmarks = JSON.parse(
+        localStorage.getItem("bookmarked") || "[]"
+      );
       setBookmarked(storedBookmarks);
     }
   }, []);
@@ -98,8 +100,10 @@ export default function Home() {
           <div
             key={problem.id}
             onClick={() => router.push(`/problems/${problem.id}`)}
-            className="p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 cursor-pointer"
+            className="p-6 rounded-lg relative shadow-md hover:shadow-lg transition-shadow bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 cursor-pointer"
           >
+           
+           
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
                 {problem.title}
@@ -122,6 +126,8 @@ export default function Home() {
             <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
               Solved: {problem.dateSolved}
             </div>
+             {/* Add Edit button */}
+             
 
             {/* Bookmark Button - Clickable Without Navigating */}
             <button
@@ -130,6 +136,14 @@ export default function Home() {
             >
               {bookmarked.includes(problem.id) ? "⭐ Bookmarked" : "☆ Bookmark"}
             </button>
+
+            <Link
+              href={`/edit-problem/${problem.id}`}
+              onClick={(e) => e.stopPropagation()}
+              className=" ml-3 text-sm bg-gray-200 dark:bg-gray-700 p-2  rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+            >
+              Edit
+            </Link>
           </div>
         ))}
       </section>
