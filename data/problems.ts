@@ -166,4 +166,69 @@ examples: [
     category: "Algorithms",
     dateSolved: "13-02-2024",
   },
+  {
+    id: "palindrome-number",
+    title: "9. Palindrome Number",
+    difficulty: "Easy",
+    description:
+      "Given an integer x, return true if x is a palindrome, and false otherwise.",
+    explanation: `A palindrome number is a number that reads the same backward as forward. 
+    To check if an integer is a palindrome, we can convert it to a string and compare it with its reverse. 
+    Alternatively, we can reverse half of the number and check if it matches the original.`,
+    code: `const isPalindrome = (x: number): boolean => {
+  if (x < 0) return false;
+  const str = x.toString();
+  return str === str.split("").reverse().join("");
+};`,
+    examples: [
+      {
+        input: "x = 121",
+        output: "true",
+        explanation: "121 reads as 121 from left to right and from right to left.",
+      },
+      {
+        input: "x = -121",
+        output: "false",
+        explanation: "From left to right, it reads -121. From right to left, it becomes 121-.",
+      },
+      {
+        input: "x = 10",
+        output: "false",
+        explanation: "Reads 01 from right to left. Therefore it is not a palindrome.",
+      },
+    ],
+    constraints: ["-2³¹ <= x <= 2³¹ - 1"],
+    category: "Algorithms",
+    dateSolved: "24-05-2024",
+  },
+  {
+    id: "valid-anagram",
+    title: "242. Valid Anagram",
+    difficulty: "Easy",
+    description:
+      "Given two strings s and t, return true if t is an anagram of s, and false otherwise.",
+    explanation: `An anagram is a word formed by rearranging the letters of another word. 
+    To check if two strings are anagrams, we can sort them and compare if they are equal. 
+    Another approach is to count the frequency of each character in both strings and compare the counts.`,
+    code: `const isAnagram = (s: string, t: string): boolean => {
+  if (s.length !== t.length) return false;
+  return s.split("").sort().join("") === t.split("").sort().join("");
+};`,
+    examples: [
+      {
+        input: 's = "anagram", t = "nagaram"',
+        output: "true",
+      },
+      {
+        input: 's = "rat", t = "car"',
+        output: "false",
+      },
+    ],
+    constraints: [
+      "1 <= s.length, t.length <= 5 × 10⁴",
+      "s and t consist of lowercase English letters.",
+    ],
+    category: "Algorithms",
+    dateSolved: "19-07-2024",
+  },
 ];

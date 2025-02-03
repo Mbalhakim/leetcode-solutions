@@ -12,6 +12,8 @@ import RomanConverter from "@/components/RomanConverter";
 import TwoSum from "./TwoSum";
 import TopKFrequentElements from "./TopKFrequentElements";
 import ContainsDuplicate from "./ContainsDuplicate";
+import PalindromeNumber from "./PalindromeNumber";
+import ValidAnagram from "./ValidAnagram";
 export default function ProblemPage() {
   const params = useParams();
   if (!params || typeof params.id !== "string") {
@@ -48,6 +50,14 @@ export default function ProblemPage() {
           <RomanConverter />
         </div>
       )}
+      {problem.id === "valid-anagram" && (
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
+            Try it Yourself
+          </h2>
+          <ValidAnagram />
+        </div>
+      )}
 
       {problem.id === "top-k-frequent-elements" && (
         <div className="mt-6">
@@ -78,6 +88,14 @@ export default function ProblemPage() {
             Try it Yourself
           </h2>
           <ContainsDuplicate />
+        </div>
+      )}
+      {problem.id === "palindrome-number" && (
+        <div className="mt-6">
+          <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
+            Try it Yourself
+          </h2>
+          <PalindromeNumber />
         </div>
       )}
 

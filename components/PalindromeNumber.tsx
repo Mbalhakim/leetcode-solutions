@@ -2,26 +2,22 @@
 
 import React, { useState } from "react";
 
-const ContainsDuplicate = () => {
+const PalindromeNumber = () => {
   const [input, setInput] = useState<string>("");
   const [result, setResult] = useState<string | null>(null);
 
-  const containsDuplicate = (nums: number[]): boolean => {
-    const seen = new Set<number>();
-    for (const num of nums) { // 🔹 FIXED: 'let' changed to 'const'
-      if (seen.has(num)) return true;
-      seen.add(num);
-    }
-    return false;
+  const isPalindrome = (x: number): boolean => {
+    if (x < 0) return false;
+    const str = x.toString();
+    return str === str.split("").reverse().join("");
   };
 
   const handleCheck = () => {
-    try {
-      const parsedInput = JSON.parse(input);
-      if (!Array.isArray(parsedInput)) throw new Error();
-      setResult(containsDuplicate(parsedInput).toString());
-    } catch {
-      setResult("Invalid input. Please enter a valid array of numbers."); // 🔹 FIXED: No unused variable
+    const parsedInput = parseInt(input, 10);
+    if (isNaN(parsedInput)) {
+      setResult("Invalid input. Please enter a valid integer.");
+    } else {
+      setResult(isPalindrome(parsedInput).toString());
     }
   };
 
@@ -30,7 +26,7 @@ const ContainsDuplicate = () => {
       <h2 className="text-lg font-semibold mb-2">Try it Yourself</h2>
       <input
         type="text"
-        placeholder="Enter an array (e.g., [1,2,3,1])"
+        placeholder="Enter an integer (e.g., 121)"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         className="w-full p-2 border rounded-md bg-white dark:bg-gray-900"
@@ -50,4 +46,4 @@ const ContainsDuplicate = () => {
   );
 };
 
-export default ContainsDuplicate;
+export default PalindromeNumber;
